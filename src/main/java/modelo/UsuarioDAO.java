@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -29,6 +30,44 @@ public class UsuarioDAO {
             tx.commit();
         } catch(Exception ex) {
             if (tx != null)
+                tx.rollback();
+            ex.printStackTrace();
+        } finally {
+            s.close();
+        }
+    }
+    
+    public Usuario buscar(String id) {
+        Session s = sf.openSession();
+        Transaction tx = null;
+        Usuario result = null;
+        
+        try {
+            tx = s.beginTransaction();
+            result = (Usuario) s.get(Usuario.class, id);
+            tx.commit();
+        } catch (Exception ex) {
+            if(tx != null)
+                tx.rollback();
+            ex.printStackTrace();
+        } finally {
+            s.close();
+        }
+        return result;
+    }
+    
+    public void borrar(String id) {
+        Session s = sf.openSession();
+        Transaction tx = null;
+        Usuario muerto = new Usuario(id, null, false, null);
+        
+        try{
+            tx = s.beginTransaction();
+            String hql = "delete from Usuario where correo = :id";
+            s.createQuery(hql).setString("id", id).executeUpdate();
+            tx.commit();
+        } catch(Exception ex) {
+            if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
         } finally {
