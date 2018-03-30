@@ -59,12 +59,10 @@ public class UsuarioDAO {
     public void borrar(String id) {
         Session s = sf.openSession();
         Transaction tx = null;
-        Usuario muerto = new Usuario(id, null, false, null);
         
         try{
             tx = s.beginTransaction();
-            String hql = "delete from Usuario where correo = :id";
-            s.createQuery(hql).setString("id", id).executeUpdate();
+            s.delete(s.get(Usuario.class, id));
             tx.commit();
         } catch(Exception ex) {
             if(tx != null)

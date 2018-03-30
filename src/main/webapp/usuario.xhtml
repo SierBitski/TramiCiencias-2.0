@@ -6,12 +6,26 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Usuario</title>
+        <f:metadata>
+            <f:viewParam name="id" value="#{vistaUsuario.id}"/>
+            <f:viewAction action="#{vistaUsuario.cargarUsuario}"/>
+        </f:metadata>
     </h:head>
     <h:body>
-        <h1> <h:outputText value="#{vistaUsuario.id}"/><br/></h1>
+        <h1> <h:outputText value="#{vistaUsuario.user.correo}"/><br/></h1>
         <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/><br/>
         <h:outputText value="#{vistaUsuario.user.fechaNacimiento}/"/> <br/>
-        <h:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario(vistaUsuario.user.correo)}" />
+        <h:form>
+            
+            <p:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario}">
+                <p:confirm header="Confirmar" message="Borrar usuario?" icon="ui-icon-alert"/>
+            </p:commandButton>
+            
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+        </h:form>
     </h:body>
 </html>
 

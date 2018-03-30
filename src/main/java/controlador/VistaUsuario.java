@@ -22,25 +22,39 @@ import lombok.*;
 @ViewScoped
 @ManagedBean
 public class VistaUsuario {
-    @ManagedProperty(value = "#{param.id}")
+    //@ManagedProperty(value = "#{params.id")
     @Getter @Setter private String id;
     @Getter @Setter private Usuario user;
     
-    @PostConstruct
-    private void construct() {
+    //@PostConstruct
+    //private void construct() {  
+    //}
+    
+    public void cargarUsuario() {
         UsuarioDAO udao = new UsuarioDAO();
+        if(this.id == null) {
+            try{ 
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            } catch (IOException ex) {
+                Logger.getLogger(VistaUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         this.user = udao.buscar(id);
         if(this.user == null)
             try {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("../404.html");
+               FacesContext.getCurrentInstance().getExternalContext().redirect("404.html");
         } catch (IOException ex) {
-            Logger.getLogger(VistaUsuario.class.getName()).log(Level.SEVERE, null, ex);
+            
         }
     }
     
-    public void borrarUsuario(String id) {
-        System.out.println(id);
+    public void borrarUsuario() {
         UsuarioDAO udao = new UsuarioDAO();
-        udao.borrar(id);
+        udao.borrar(this.id);
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+        } catch (IOException e) {
+            Logger.getLogger(VistaUsuario.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 }
