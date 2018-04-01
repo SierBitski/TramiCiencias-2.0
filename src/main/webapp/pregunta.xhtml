@@ -19,37 +19,33 @@
         <hr/>
         <h:outputText value="#{vistaPregunta.pregunta.texto}"/><br/><br/>
         <hr/>
-            <h:form>
-             <p:commandButton value="Borrar Pregunta" icon="ui-icon-trash" action="#{vistaPregunta.borrarPregunta}">
+        <h:form>
+             <p:commandLink value="Borrar Pregunta" action="#{vistaPregunta.borrarPregunta}">
              <p:confirm header="Confirmar" message="Está seguro de que desea borrar la pregunta? Se borrarán también todas las respuestas asociadas a ella" 
                         icon="ui-icon-alert"/>
-            </p:commandButton>
+             </p:commandLink>
 
             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                 <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                 <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
             </p:confirmDialog>
-            </h:form>
+        </h:form>
         </p:fieldset>
         <br/><br/>
-        
-        
-        <ui:repeat value="#{vistaPregunta.respuestas}" var="respuesta">
-            <p:fieldset legend="#{respuesta.correoUsuario} dice:">
-            <h:outputText value="#{respuesta.texto}"/><br/>            
+        <h:form prependId="false">
+
+            <p:dataScroller value="#{vistaPregunta.respuestas}" var="respuesta">
+            <h:outputText value="#{respuesta.correoUsuario} dice:"/><br/>
+            <h:outputText value="#{respuesta.texto}"/><br/>
             <hr/>
-            <h:form>
-                <p:commandButton value="Borrar respuesta" icon="ui-icon-trash" actionListener="#{vistaPregunta.borrarRespuesta}" >
-                <p:confirm header="Confirmar" message="borrar respuesta?" icon="ui-icon-alert"/>
-            </p:commandButton>
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-            </h:form>
-            </p:fieldset>
+            <h:outputText value="Borrar: "/> 
+            <p:selectBooleanCheckbox>
+                <p:ajax listener="#{vistaPregunta.print(respuesta.idRespuesta)}"/>
+            </p:selectBooleanCheckbox>
             <br/>
-        </ui:repeat>   
+            </p:dataScroller>
+            
+        </h:form>        
 
     </h:body>
 </html>

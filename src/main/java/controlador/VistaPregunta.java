@@ -65,4 +65,9 @@ public class VistaPregunta {
     public void borrarRespuesta() {
         System.out.println("HAHAHAH YOU SORRY FOOL");
     }
+    
+    public String print(int id) {
+        System.out.println(id);
+        return "success";
+    }
 }
