@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import modelo.*;
@@ -20,7 +21,7 @@ import lombok.*;
  *
  * @author dixego
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class VistaPregunta {
     //@ManagedProperty(value = "#{partams.id")
@@ -54,16 +55,16 @@ public class VistaPregunta {
     }
     
     public void borrarPregunta() {
-        /*RespuestaDAO rdao = new RespuestaDAO();
+        RespuestaDAO rdao = new RespuestaDAO();
         PreguntaDAO pdao = new PreguntaDAO();
         
         rdao.borrarRespuestasPorPregunta(this.id);
-        pdao.borrar(this.id);*/
-        System.out.println("LAAAAAAAAAVIIIIIIIIKIIIIIIINAAAAAAAAAAA");
+        pdao.borrar(this.id);
     }
     
-    public void borrarRespuesta() {
-        System.out.println("HAHAHAH YOU SORRY FOOL");
+    public void borrarRespuesta(int id) {
+        RespuestaDAO rdao = new RespuestaDAO();
+        rdao.borrar(id);
     }
     
     public String print(int id) {

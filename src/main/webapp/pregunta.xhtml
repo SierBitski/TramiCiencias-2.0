@@ -32,21 +32,23 @@
         </h:form>
         </p:fieldset>
         <br/><br/>
-        <h:form prependId="false">
-
-            <p:dataScroller value="#{vistaPregunta.respuestas}" var="respuesta">
-            <h:outputText value="#{respuesta.correoUsuario} dice:"/><br/>
+        <h:form>
+            <ui:repeat value="#{vistaPregunta.respuestas}" var="respuesta">
+                <p:fieldset legend="#{respuesta.correoUsuario} dice:" >
             <h:outputText value="#{respuesta.texto}"/><br/>
             <hr/>
-            <h:outputText value="Borrar: "/> 
-            <p:selectBooleanCheckbox>
-                <p:ajax listener="#{vistaPregunta.print(respuesta.idRespuesta)}"/>
-            </p:selectBooleanCheckbox>
-            <br/>
-            </p:dataScroller>
-            
-        </h:form>        
+            <p:commandLink value="Borrar Pregunta" action="#{vistaPregunta.borrarRespuesta(respuesta.idRespuesta)}" style="float: right;">
+             <p:confirm header="Confirmar" message="Borrar respuesta?" icon="ui-icon-alert"/>
+             </p:commandLink>
 
+            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+            </p:confirmDialog>
+            <br/>
+            </p:fieldset>
+            </ui:repeat>
+        </h:form>
     </h:body>
 </html>
 
