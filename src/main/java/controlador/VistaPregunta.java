@@ -29,6 +29,7 @@ public class VistaPregunta {
     @Getter @Setter private Pregunta pregunta;
     @Getter @Setter private List<Respuesta> respuestas;
     @Getter @Setter private int respuestaId;
+    @Getter @Setter private boolean loggedAdmin;
     
     //@PostConstruct
     //private void construct() {  
@@ -46,6 +47,12 @@ public class VistaPregunta {
         }*/
         this.pregunta = pdao.buscarPregunta(id);
         this.respuestas = rdao.buscarRespuestasPorPregunta(id);
+        Usuario logged = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(logged != null) {
+            this.loggedAdmin = logged.isEsAdmin();
+        } else {
+            this.loggedAdmin = false;
+        }
         if(this.pregunta == null)
             try {
                FacesContext.getCurrentInstance().getExternalContext().redirect("404.html");

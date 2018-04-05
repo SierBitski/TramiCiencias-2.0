@@ -16,7 +16,7 @@
         <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/><br/>
         <h:outputText value="#{vistaUsuario.user.fechaNacimiento}/"/> <br/>
         
-        <h:form>
+        <h:form rendered="#{vistaUsuario.loggedAdmin}">
             <p:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario}">
                 <p:confirm header="Confirmar" message="Borrar usuario?" icon="ui-icon-alert"/>
             </p:commandButton>

@@ -25,6 +25,8 @@ public class VistaUsuario {
     //@ManagedProperty(value = "#{params.id")
     @Getter @Setter private String id;
     @Getter @Setter private Usuario user;
+    @Getter @Setter private boolean loggedAdmin;
+    
     
     //@PostConstruct
     //private void construct() {  
@@ -38,6 +40,12 @@ public class VistaUsuario {
             } catch (IOException ex) {
                 Logger.getLogger(VistaUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+        Usuario logged = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
+        if(logged != null) {
+            this.loggedAdmin = logged.isEsAdmin();
+        } else {
+            this.loggedAdmin = false;
         }
         this.user = udao.buscar(id);
         if(this.user == null)

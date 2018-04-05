@@ -10,7 +10,10 @@
         <br />
         <h:link outcome="crearusuario" value="CREAR USUARIO" />
         <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+        <h:link outcome="iniciarsesion" value="Iniciar Sesión"/>
+        <h:form>
+        <h:commandButton value="cerrar sesion" action="#{iniciarSesion.logout}" />
+        </h:form>
     </h:body>
 </html>
 
