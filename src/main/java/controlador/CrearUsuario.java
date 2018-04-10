@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import java.util.regex.*;
+import javax.faces.application.FacesMessage;
 import modelo.*;
 import lombok.*;
 
@@ -32,14 +34,21 @@ public class CrearUsuario {
     
       
     public String crearUsuario() {
-        Usuario u = Usuario.builder().correo(correo)
-                .nombreUsuario(nombreUsuario)
-                .fechaNacimiento(fechaNacimiento)
-                .esAdmin(esAdmin)
-                .contrasena(contrasena).build();
-        UsuarioDAO udao = new UsuarioDAO();
-        udao.guardar(u);
-        return "index.xhtml?faces-redirect=true";
+        Pattern p = Pattern.compile("[\\w\\-\\_\\+ñ]*@ciencias\\.unam\\.mx");
+        Matcher m = p.matcher(correo);
+        if(m.matches()){
+            Usuario u = Usuario.builder().correo(correo)
+                    .nombreUsuario(nombreUsuario)
+                    .fechaNacimiento(fechaNacimiento)
+                    .esAdmin(esAdmin)
+                    .contrasena(contrasena).build();
+            UsuarioDAO udao = new UsuarioDAO();
+            udao.guardar(u);
+            return "index.xhtml?faces-redirect=true";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correo inválido"));
+            return "";
+        }        
     }
     
 }

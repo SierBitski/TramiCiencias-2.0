@@ -10,8 +10,13 @@
     <ui:composition template="./plantilla.xhtml">           
         <ui:define name="contenido">
             <h:form>
+
+                <p:messages id="messages" showDetail="true" closable="true">
+                    <p:autoUpdate/>
+                </p:messages>
+
                 <h:panelGrid style="margin: 0 auto;" columns="2">
-                    
+
                     <h:outputText value="Correo:"/> 
                     <p:inputText value="#{crearUsuario.correo}" placeholder="Correo"/>
 
@@ -26,7 +31,7 @@
 
                     <p:outputLabel value="fecha de nacimiento" />
                     <p:calendar id="popup" value="#{crearUsuario.fechaNacimiento}" />
-                    
+
                     <p:commandButton value="Crear usuario" action="#{crearUsuario.crearUsuario()}"/>   
 
                 </h:panelGrid>
