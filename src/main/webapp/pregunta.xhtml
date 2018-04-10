@@ -5,54 +5,58 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    <h:head>
+    
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="titulo" >#{vistaPregunta.pregunta.titulo}</ui:define>
+    <ui:define name="contenido">
         <f:metadata>
             <f:viewParam name="id" value="#{vistaPregunta.id}"/>
             <f:viewAction action="#{vistaPregunta.cargarPregunta}"/>
         </f:metadata>
-        <title>Pregunta</title>              
-   </h:head>
-    <h:body>
-        
         <p:fieldset legend="#{vistaPregunta.pregunta.titulo}">
-        <h:outputText value="Preguntado por #{vistaPregunta.pregunta.correoUsuario}"/><br/>
-        <hr/>
-        <h:outputText value="#{vistaPregunta.pregunta.texto}"/><br/><br/>
-        
-        <h:form rendered="#{vistaPregunta.loggedAdmin}">
+            <h:outputText value="Preguntado por #{vistaPregunta.pregunta.correoUsuario}"/><br/>
             <hr/>
-             <p:commandLink value="Borrar Pregunta" action="#{vistaPregunta.borrarPregunta}">
-             <p:confirm header="Confirmar" message="Está seguro de que desea borrar la pregunta? Se borrarán también todas las respuestas asociadas a ella" 
-                        icon="ui-icon-alert"/>
-             </p:commandLink>
+            <h:outputText value="#{vistaPregunta.pregunta.texto}"/><br/><br/>
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-        </h:form>
-        </p:fieldset>
-        <br/><br/>
-        
-            <ui:repeat value="#{vistaPregunta.respuestas}" var="respuesta">
-                <p:fieldset legend="#{respuesta.correoUsuario} dice:" >
-            <h:outputText value="#{respuesta.texto}"/><br/>
-            
+
+            <a href="pregunta.xhtml?id=#{pregunta.id}" ><h:outputText value="#{pregunta.titulo}"/></a>
+
+
             <h:form rendered="#{vistaPregunta.loggedAdmin}">
                 <hr/>
-            <p:commandLink value="Borrar Pregunta" action="#{vistaPregunta.borrarRespuesta(respuesta.idRespuesta)}" style="float: right;">
-             <p:confirm header="Confirmar" message="Borrar respuesta?" icon="ui-icon-alert"/>
-             </p:commandLink>
+                <p:commandLink value="Borrar Pregunta" action="#{vistaPregunta.borrarPregunta}">
+                    <p:confirm header="Confirmar" message="Está seguro de que desea borrar la pregunta? Se borrarán también todas las respuestas asociadas a ella" 
+                               icon="ui-icon-alert"/>
+                </p:commandLink>
 
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-            <br/>
+                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                    <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                </p:confirmDialog>
             </h:form>
+        </p:fieldset>
+        <br/><br/>
+
+        <ui:repeat value="#{vistaPregunta.respuestas}" var="respuesta">
+            <p:fieldset legend="#{respuesta.correoUsuario} dice:" >
+                <h:outputText value="#{respuesta.texto}"/><br/>
+
+                <h:form rendered="#{vistaPregunta.loggedAdmin}">
+                    <hr/>
+                    <p:commandLink value="Borrar Respuesta" action="#{vistaPregunta.borrarRespuesta(respuesta.idRespuesta)}" style="float: right;">
+                        <p:confirm header="Confirmar" message="Borrar respuesta?" icon="ui-icon-alert"/>
+                    </p:commandLink>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                    <br/>
+                </h:form>
             </p:fieldset>
-            </ui:repeat>
-        
-    </h:body>
+        </ui:repeat>
+
+    </ui:define>
+        </ui:composition>
 </html>
 

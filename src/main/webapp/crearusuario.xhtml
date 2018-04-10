@@ -3,26 +3,35 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title> Crear Usuario</title>
-    </h:head>
-    <h:body>
-        <h:outputText value="#{crearUsuario.id}"/>
-        <h:form>
-            <h:outputText value="Correo: "/> 
-            <p:inputText value="#{crearUsuario.correo}" placeholder="Correo"/> <br/>
-            <h:outputText value="Nombre Usuario: "/>
-            <p:inputText value="#{crearUsuario.nombreUsuario}" placeholder="nombre usuario"/> <br/>
-            <h:outputText value="Contraseña: "/>
-            <p:password  value="#{crearUsuario.contrasena}" placeholder="Contraseña"/> <br/>
-            <h:outputText value="esAdmin?"/><br/>
-            <p:selectBooleanCheckbox value="#{crearUsuario.esAdmin}"  /><br/>
-            <p:outputLabel value="fecha de nacimiento" /> <br/>
-            <p:calendar id="popup" value="#{crearUsuario.fechaNacimiento}" /><br/>
-            <p:commandButton value="Crear profesionista" action="#{crearUsuario.crearUsuario()}"/>
-            
-        </h:form>
-        
-    </h:body>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <ui:composition template="./plantilla.xhtml">           
+        <ui:define name="contenido">
+            <h:form>
+                <h:panelGrid style="margin: 0 auto;" columns="2">
+                    
+                    <h:outputText value="Correo:"/> 
+                    <p:inputText value="#{crearUsuario.correo}" placeholder="Correo"/>
+
+                    <h:outputText value="Nombre Usuario:"/>
+                    <p:inputText value="#{crearUsuario.nombreUsuario}" placeholder="nombre usuario"/>
+
+                    <h:outputText value="Contraseña: "/>
+                    <p:password  value="#{crearUsuario.contrasena}" placeholder="Contraseña"/>
+
+                    <h:outputText value="esAdmin?"/>
+                    <h:column> <p:selectBooleanCheckbox value="#{crearUsuario.esAdmin}"  /></h:column>
+
+                    <p:outputLabel value="fecha de nacimiento" />
+                    <p:calendar id="popup" value="#{crearUsuario.fechaNacimiento}" />
+                    
+                    <p:commandButton value="Crear usuario" action="#{crearUsuario.crearUsuario()}"/>   
+
+                </h:panelGrid>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
 </html>

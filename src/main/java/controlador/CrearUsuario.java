@@ -28,12 +28,10 @@ public class CrearUsuario {
     @Getter @Setter private Date fechaNacimiento;
     @Getter @Setter private boolean esAdmin;
     @Getter @Setter private String contrasena;
-    @ManagedProperty(value = "#{param.id}")
-    @Getter @Setter private String id;
     
     
       
-    public void crearUsuario() {
+    public String crearUsuario() {
         Usuario u = Usuario.builder().correo(correo)
                 .nombreUsuario(nombreUsuario)
                 .fechaNacimiento(fechaNacimiento)
@@ -41,6 +39,7 @@ public class CrearUsuario {
                 .contrasena(contrasena).build();
         UsuarioDAO udao = new UsuarioDAO();
         udao.guardar(u);
+        return "index.xhtml?faces-redirect=true";
     }
     
 }
