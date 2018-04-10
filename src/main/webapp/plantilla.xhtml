@@ -12,41 +12,40 @@
             body {
                 background: #3a0041;
             }
-            #body {
-                width: 65%;
-                height: 100%;
-                margin: 0 auto;
-                bottom: 0px none;
-            }
 
             #contenido {
-                height: 100%;
+                bottom: 0px;
             }
 
+            #body {
+                margin: 0 auto;
+            }
         </style>
 
     </h:head>
     <h:body>
         <div class="ui-g" id="body">
-            <div class="ui-g-12" id="header">
+            <div class="ui-g-12">
                 <p:panel>
                     <h:link outcome="index" style="text-decoration: none;"><h1>TramiCiencias</h1></h:link>
+                    <div class="ui-g">
+                        <div class="ui-g-12">
+                            <h:form>
+                                <p:menubar>
+                                    <p:menuitem value="#{sesionGlobal.usuario.correo}" outcome="usuario" rendered="#{sesionGlobal.logged}">
+                                        <f:param name="id" value="#{sesionGlobal.usuario.correo}"/>
+                                    </p:menuitem>
+                                    <p:menuitem value="Cerrar Sesion" action="#{iniciarSesion.logout()}" rendered="#{sesionGlobal.logged}"/>
+                                    <p:menuitem value="Iniciar Sesion" outcome="iniciarsesion" rendered="#{!sesionGlobal.logged}"/>
+                                    <p:menuitem value="Crear Usuario" outcome="crearusuario" rendered="#{!sesionGlobal.logged}"/>
+                                    <f:facet name="options">
+                                        <p:inputText style="margin-right:10px" placeholder="Search"/>
+                                    </f:facet>
+                                </p:menubar>
+                            </h:form>
+                        </div>
+                    </div>
                 </p:panel>
-                <div class="ui-g-12">
-                    <h:form>
-                        <p:menubar>
-                            <p:menuitem value="#{sesionGlobal.usuario.correo}" outcome="usuario" rendered="#{sesionGlobal.logged}">
-                                <f:param name="id" value="#{sesionGlobal.usuario.correo}"/>
-                            </p:menuitem>
-                            <p:menuitem value="Cerrar Sesion" action="#{iniciarSesion.logout()}" rendered="#{sesionGlobal.logged}"/>
-                            <p:menuitem value="Iniciar Sesion" outcome="iniciarsesion" rendered="#{!sesionGlobal.logged}"/>
-                            <p:menuitem value="Crear Usuario" outcome="crearusuario" rendered="#{!sesionGlobal.logged}"/>
-                            <f:facet name="options">
-                                <p:inputText style="margin-right:10px" placeholder="Search"/>
-                            </f:facet>
-                        </p:menubar>
-                    </h:form>
-                </div>
             </div>
 
             <div class="ui-g-12" id="contenido">
@@ -54,6 +53,7 @@
                     <ui:insert name="contenido" > Contenido </ui:insert>
                 </p:panel>
             </div>
+
         </div>
     </h:body>
 </html>

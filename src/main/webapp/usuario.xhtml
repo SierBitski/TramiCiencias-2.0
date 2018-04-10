@@ -15,20 +15,20 @@
     <h:body>
         <ui:composition template="plantilla.xhtml">
             <ui:define name="contenido">
-        <h1> <h:outputText value="#{vistaUsuario.user.correo}"/><br/></h1>
-        <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/><br/>
-        <h:outputText value="#{vistaUsuario.user.fechaNacimiento}/"/> <br/>
-        
-        <h:form rendered="#{vistaUsuario.loggedAdmin}">
-            <p:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario}">
-                <p:confirm header="Confirmar" message="Borrar usuario?" icon="ui-icon-alert"/>
-            </p:commandButton>
-            
-            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-                <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-                <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-            </p:confirmDialog>
-        </h:form>
+                <h1> <h:outputText value="#{vistaUsuario.user.correo}"/><br/></h1>
+                <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/><br/>
+                <h:outputText value="#{vistaUsuario.user.fechaNacimiento}/"/> <br/>
+
+                <h:form rendered="#{vistaUsuario.loggedAdmin}">
+                    <p:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario}">
+                        <p:confirm header="Confirmar" message="Borrar usuario?" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                        <p:commandButton value="Sí" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                    </p:confirmDialog>
+                </h:form>
             </ui:define>
         </ui:composition>
     </h:body>

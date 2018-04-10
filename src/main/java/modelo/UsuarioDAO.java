@@ -5,6 +5,7 @@
  */
 package modelo;
 
+import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -95,6 +96,23 @@ public class UsuarioDAO {
         } finally {
             s.close();
         }
+    }
+    
+    public List<Usuario> usuarios() {
+        Session s = sf.openSession();
+        Transaction tx = null;
+        List<Usuario> result = null;
+        
+        try {
+            tx = s.beginTransaction();
+            String hql = "from Usuario";
+            result = (List<Usuario>) s.createQuery(hql).list();
+        } catch (Exception ex) {
+            
+        } finally {
+            s.close();
+        }
+        return result;
     }
     
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <ui:composition template="plantilla.xhtml">
+        <ui:define name="contenido">
+            
+            <f:metadata>
+                <f:viewAction action="#{vistaUsuarios.cargarUsuarios()}"/>
+            </f:metadata>
+            <ui:repeat value="#{vistaUsuarios.usuarios}" var="usuario">
+                <h:link outcome="usuario.xhtml?id=#{usuario.correo}">
+                    <h:outputText value="#{usuario.nombreUsuario}"/><br/>
+                </h:link>
+            </ui:repeat>
+        </ui:define>
+    </ui:composition>
+</html>
