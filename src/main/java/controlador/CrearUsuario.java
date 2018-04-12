@@ -28,7 +28,6 @@ public class CrearUsuario {
     @Getter @Setter private String correo;
     @Getter @Setter private String nombreUsuario;
     @Getter @Setter private Date fechaNacimiento;
-    @Getter @Setter private boolean esAdmin;
     @Getter @Setter private String contrasena;
     
     
@@ -40,7 +39,7 @@ public class CrearUsuario {
             Usuario u = Usuario.builder().correo(correo)
                     .nombreUsuario(nombreUsuario)
                     .fechaNacimiento(fechaNacimiento)
-                    .esAdmin(esAdmin)
+                    .esAdmin(false)
                     .contrasena(contrasena).build();
             UsuarioDAO udao = new UsuarioDAO();
             udao.guardar(u);

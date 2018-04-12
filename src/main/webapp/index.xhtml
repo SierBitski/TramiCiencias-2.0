@@ -2,12 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     
     <ui:composition template="plantilla.xhtml">
         <ui:define name="titulo"></ui:define>
         <ui:define name="contenido">
-            Esta es la página principal :)
+            Preguntas más recientes:
+            <p:dataScroller value="#{principal.preguntas}" var="pregunta" chunkSize="10">
+                <h:link outcome="pregunta?id=#{pregunta.idPregunta}" value="#{pregunta.titulo}"/>
+            </p:dataScroller>
         </ui:define>
     </ui:composition>
 </html>

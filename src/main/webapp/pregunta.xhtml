@@ -13,7 +13,7 @@
             <f:viewParam name="id" value="#{vistaPregunta.id}"/>
             <f:viewAction action="#{vistaPregunta.cargarPregunta}"/>
         </f:metadata>
-        <p:fieldset legend="#{vistaPregunta.pregunta.titulo}">
+        <p:panel header="#{vistaPregunta.pregunta.titulo}">
             <h:outputText value="Preguntado por #{vistaPregunta.pregunta.correoUsuario}"/><br/>
             <hr/>
             <h:outputText value="#{vistaPregunta.pregunta.texto}"/><br/><br/>
@@ -34,13 +34,12 @@
                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                 </p:confirmDialog>
             </h:form>
-        </p:fieldset>
+        </p:panel>
         <br/><br/>
 
         <ui:repeat value="#{vistaPregunta.respuestas}" var="respuesta">
-            <p:fieldset legend="#{respuesta.correoUsuario} dice:" >
+            <p:panel header="#{respuesta.correoUsuario} dice:" toggleable="true" toggleOrientation="vertical">
                 <h:outputText value="#{respuesta.texto}"/><br/>
-
                 <h:form rendered="#{vistaPregunta.loggedAdmin}">
                     <hr/>
                     <p:commandLink value="Borrar Respuesta" action="#{vistaPregunta.borrarRespuesta(respuesta.idRespuesta)}" style="float: right;">
@@ -53,7 +52,7 @@
                     </p:confirmDialog>
                     <br/>
                 </h:form>
-            </p:fieldset>
+            </p:panel><br/> 
         </ui:repeat>
 
     </ui:define>

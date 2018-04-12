@@ -26,9 +26,6 @@
                     <h:outputText value="Contraseña: "/>
                     <p:password  value="#{crearUsuario.contrasena}" placeholder="Contraseña"/>
 
-                    <h:outputText value="esAdmin?"/>
-                    <h:column> <p:selectBooleanCheckbox value="#{crearUsuario.esAdmin}"  /></h:column>
-
                     <p:outputLabel value="fecha de nacimiento" />
                     <p:calendar id="popup" value="#{crearUsuario.fechaNacimiento}" />
 

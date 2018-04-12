@@ -12,9 +12,9 @@
             body {
                 background: #3a0041;
             }
-
-            #contenido {
-                bottom: 0px;
+            
+            #center {
+                margin: 0 auto;
             }
 
             #body {
@@ -24,13 +24,14 @@
 
     </h:head>
     <h:body>
-        <div class="ui-g" id="body">
-            <div class="ui-g-12">
+        <div class="ui-g ui-g-nopad">
+            <div class="ui-g-8 ui-m-12" id="center">
                 <p:panel>
-                    <h:link outcome="index" style="text-decoration: none;"><h1>TramiCiencias</h1></h:link>
+                    <h:link outcome="index" style="text-decoration: none; text-align: center;"><h1>TramiCiencias</h1></h:link>
                     <div class="ui-g">
+                        
                         <div class="ui-g-12">
-                            <h:form>
+                            <h:form>                            
                                 <p:menubar>
                                     <p:menuitem value="#{sesionGlobal.usuario.correo}" outcome="usuario" rendered="#{sesionGlobal.logged}">
                                         <f:param name="id" value="#{sesionGlobal.usuario.correo}"/>
@@ -39,21 +40,25 @@
                                     <p:menuitem value="Iniciar Sesion" outcome="iniciarsesion" rendered="#{!sesionGlobal.logged}"/>
                                     <p:menuitem value="Crear Usuario" outcome="crearusuario" rendered="#{!sesionGlobal.logged}"/>
                                     <f:facet name="options">
-                                        <p:inputText style="margin-right:10px" placeholder="Search"/>
+                                        <p:inputText value="#{resultadosBusqueda.busqueda}" style="margin-right: 10px;" placeholder="buscar"/>
+                                        <p:commandButton action="#{resultadosBusqueda.buscarPregunta}" icon="ui-icon-search"/>
                                     </f:facet>
                                 </p:menubar>
                             </h:form>
-                        </div>
+                        </div>                        
                     </div>
                 </p:panel>
             </div>
-
-            <div class="ui-g-12" id="contenido">
+        </div>
+        
+        <div class="ui-g" >
+            <div class="ui-g-8 ui-m-12" id="center">
                 <p:panel>
-                    <ui:insert name="contenido" > Contenido </ui:insert>
+                    <ui:insert name="contenido"> Contenido </ui:insert>
                 </p:panel>
             </div>
-
         </div>
+
+
     </h:body>
 </html>
