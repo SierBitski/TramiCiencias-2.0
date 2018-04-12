@@ -12,8 +12,10 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.servlet.http.HttpServletRequest;
 import modelo.*;
 import lombok.*;
 
@@ -67,11 +69,23 @@ public class VistaPregunta {
         
         rdao.borrarRespuestasPorPregunta(this.id);
         pdao.borrar(this.id);
+        try {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());    
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public void borrarRespuesta(int id) {
         RespuestaDAO rdao = new RespuestaDAO();
         rdao.borrar(id);
+        try {
+            ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+            ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());    
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public String print(int id) {

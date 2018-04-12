@@ -13,8 +13,13 @@
             <f:viewParam name="id" value="#{vistaPregunta.id}"/>
             <f:viewAction action="#{vistaPregunta.cargarPregunta}"/>
         </f:metadata>
+        
         <p:panel header="#{vistaPregunta.pregunta.titulo}">
-            <h:outputText value="Preguntado por #{vistaPregunta.pregunta.correoUsuario}"/><br/>
+            Preguntado por
+            <h:link outcome="usuario" accesskey="">
+                <h:outputText value="#{vistaPregunta.pregunta.correoUsuario}"/><br/>
+                <f:param name="id" value="#{vistaPregunta.pregunta.correoUsuario}"/>
+            </h:link>
             <hr/>
             <h:outputText value="#{vistaPregunta.pregunta.texto}"/><br/><br/>
 
@@ -22,7 +27,7 @@
             <a href="pregunta.xhtml?id=#{pregunta.id}" ><h:outputText value="#{pregunta.titulo}"/></a>
 
 
-            <h:form rendered="#{vistaPregunta.loggedAdmin}">
+            <h:form rendered="#{vistaPregunta.loggedAdmin or sesionGlobal.usuario.correo == vistaPregunta.pregunta.correoUsuario}">
                 <hr/>
                 <p:commandLink value="Borrar Pregunta" action="#{vistaPregunta.borrarPregunta}">
                     <p:confirm header="Confirmar" message="Está seguro de que desea borrar la pregunta? Se borrarán también todas las respuestas asociadas a ella" 
@@ -36,11 +41,27 @@
             </h:form>
         </p:panel>
         <br/><br/>
+        
+        <h:form rendered="#{sesionGlobal.logged}">
+            <p:panel style="margin: 0 auto;" header="Responder" toggleable="true" toggleOrientation="vertical">
+                <p:inputTextarea value="#{nuevaRespuesta.respuesta}" autoResize="true"  cols="30" style="width: 100%;"/><br/>
+                <p:commandButton value="Responder" action="#{nuevaRespuesta.guardarRespuesta()}"/>
+            </p:panel>
+        </h:form>
 
+        <br/>
+        
         <ui:repeat value="#{vistaPregunta.respuestas}" var="respuesta">
-            <p:panel header="#{respuesta.correoUsuario} dice:" toggleable="true" toggleOrientation="vertical">
+            <p:panel toggleable="true" toggleOrientation="vertical" >
+                <f:facet name="header">
+                    <h:link outcome="usuario">
+                        #{respuesta.correoUsuario}
+                        <f:param name="id" value="#{respuesta.correoUsuario}"/>
+                    </h:link>
+                     dice:
+                </f:facet>
                 <h:outputText value="#{respuesta.texto}"/><br/>
-                <h:form rendered="#{vistaPregunta.loggedAdmin}">
+                <h:form rendered="#{vistaPregunta.loggedAdmin or sesionGlobal.usuario.correo == respuesta.correoUsuario}">
                     <hr/>
                     <p:commandLink value="Borrar Respuesta" action="#{vistaPregunta.borrarRespuesta(respuesta.idRespuesta)}" style="float: right;">
                         <p:confirm header="Confirmar" message="Borrar respuesta?" icon="ui-icon-alert"/>

@@ -6,7 +6,7 @@
     <class name="modelo.Respuesta" table="respuesta" optimistic-lock="version">
         <id name="idRespuesta" type="int">
             <column name="id_respuesta" />
-            <generator class="assigned" />
+            <generator class="identity" />
         </id>
         <property name="idPregunta" type="int">
             <column name="id_pregunta" not-null="true" />

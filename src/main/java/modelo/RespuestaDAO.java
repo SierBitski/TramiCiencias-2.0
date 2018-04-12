@@ -22,6 +22,22 @@ public class RespuestaDAO {
         this.sf = HibernateUtil.getSessionFactory();
     }
     
+        public void guardar(Respuesta u){
+        Session s = sf.openSession();
+        Transaction tx = null;
+        try {
+            tx = s.beginTransaction();
+            s.persist(u);
+            tx.commit();
+        } catch(Exception ex) {
+            if (tx != null)
+                tx.rollback();
+            ex.printStackTrace();
+        } finally {
+            s.close();
+        }
+    }
+    
     public Respuesta buscarPregunta(int id) {
         Session s = sf.openSession();
         Transaction tx = null;

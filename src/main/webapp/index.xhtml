@@ -8,7 +8,7 @@
     <ui:composition template="plantilla.xhtml">
         <ui:define name="titulo"></ui:define>
         <ui:define name="contenido">
-            Preguntas más recientes:
+            Preguntas más recientes: <br/>
             <p:dataScroller value="#{principal.preguntas}" var="pregunta" chunkSize="10">
                 <h:link outcome="pregunta?id=#{pregunta.idPregunta}" value="#{pregunta.titulo}"/>
             </p:dataScroller>
