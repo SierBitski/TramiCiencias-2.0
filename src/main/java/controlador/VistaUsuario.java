@@ -30,7 +30,8 @@ public class VistaUsuario {
     @Getter @Setter private Usuario user;
     @Getter @Setter private boolean loggedAdmin;
     @Getter @Setter private List<Pregunta> preguntas;
-    
+    @ManagedProperty(value="#{sesionGlobal}") @Getter @Setter
+    SesionGlobal sesionGlobal;
     
     //@PostConstruct
     //private void construct() {  
@@ -76,8 +77,14 @@ public class VistaUsuario {
             pdao.borrar(p.getIdPregunta());
         }
         rdao.borrarRespuestasPorUsuario(this.id);
+
+        if(sesionGlobal.getUsuario().getCorreo() == this.id) {
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+            System.out.println("XXXXXXXXXXXXX:" + sesionGlobal.getUsuario().getCorreo());
+        }
         
         udao.borrar(this.id);
+
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         } catch (IOException e) {
