@@ -33,9 +33,11 @@
                         <div class="ui-g-12">
                             <h:form>                            
                                 <p:menubar>
+                                    
                                     <p:menuitem value="#{sesionGlobal.usuario.correo}" outcome="usuario" rendered="#{sesionGlobal.logged}">
                                         <f:param name="id" value="#{sesionGlobal.usuario.correo}"/>
                                     </p:menuitem>
+                                    <p:menuitem value="Nueva pregunta" outcome="nuevapregunta" icon="ui-icon-plus" rendered="#{sesionGlobal.logged}"/>
                                     <p:menuitem value="Cerrar Sesion" action="#{iniciarSesion.logout()}" rendered="#{sesionGlobal.logged}"/>
                                     <p:menuitem value="Iniciar Sesion" outcome="iniciarsesion" rendered="#{!sesionGlobal.logged}"/>
                                     <p:menuitem value="Crear Usuario" outcome="crearusuario" rendered="#{!sesionGlobal.logged}"/>

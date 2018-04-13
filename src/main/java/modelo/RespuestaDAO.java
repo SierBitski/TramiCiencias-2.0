@@ -126,4 +126,22 @@ public class RespuestaDAO {
         }
     }
     
+    public void borrarRespuestasPorUsuario(String correo) {
+        Session s = sf.openSession();
+        Transaction tx = null;
+        
+        try{
+            tx = s.beginTransaction();
+            String hql = "delete from Respuesta where correoUsuario = :correo";
+            s.createQuery(hql).setParameter("correo", correo).executeUpdate();
+            tx.commit();
+        } catch(Exception ex) {
+            if(tx != null)
+                tx.rollback();
+            ex.printStackTrace();
+        } finally {
+            s.close();
+        }
+    }
+    
 }

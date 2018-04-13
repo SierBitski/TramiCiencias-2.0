@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -25,7 +26,9 @@ public class Principal {
     @PostConstruct
     public void conseguirPreguntas() {
         PreguntaDAO pdao = new PreguntaDAO();
-        this.preguntas = pdao.preguntas();
+        List<Pregunta> preguntas = pdao.preguntas();
+        Collections.reverse(preguntas);
+        this.preguntas = preguntas;
     }
     
 }

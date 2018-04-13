@@ -5,11 +5,14 @@
  */
 package controlador;
 import java.io.IOException;
+import java.util.Collections;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import modelo.*;
@@ -19,13 +22,14 @@ import lombok.*;
  *
  * @author dixego
  */
-@ViewScoped
+@SessionScoped
 @ManagedBean
 public class VistaUsuario {
     //@ManagedProperty(value = "#{params.id")
     @Getter @Setter private String id;
     @Getter @Setter private Usuario user;
     @Getter @Setter private boolean loggedAdmin;
+    @Getter @Setter private List<Pregunta> preguntas;
     
     
     //@PostConstruct
@@ -34,6 +38,7 @@ public class VistaUsuario {
     
     public void cargarUsuario() {
         UsuarioDAO udao = new UsuarioDAO();
+        PreguntaDAO pdao = new PreguntaDAO();
         if(this.id == null) {
             try{ 
                 FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
@@ -48,16 +53,30 @@ public class VistaUsuario {
             this.loggedAdmin = false;
         }
         this.user = udao.buscar(id);
-        if(this.user == null)
+        
+        if (this.user == null) {
             try {
-               FacesContext.getCurrentInstance().getExternalContext().redirect("404.html");
-        } catch (IOException ex) {
-            
+                FacesContext.getCurrentInstance().getExternalContext().redirect("404.html");
+            } catch (IOException ex) {
+
+            }
+        } else {
+            this.preguntas = pdao.buscarPorUsuario(user.getCorreo());
+            Collections.reverse(this.preguntas);
         }
     }
     
     public void borrarUsuario() {
         UsuarioDAO udao = new UsuarioDAO();
+        RespuestaDAO rdao = new RespuestaDAO();
+        PreguntaDAO pdao = new PreguntaDAO();
+        
+        for(Pregunta p: this.preguntas) {
+            rdao.borrarRespuestasPorPregunta(p.getIdPregunta());
+            pdao.borrar(p.getIdPregunta());
+        }
+        rdao.borrarRespuestasPorUsuario(this.id);
+        
         udao.borrar(this.id);
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");

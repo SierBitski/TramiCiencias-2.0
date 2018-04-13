@@ -19,7 +19,7 @@
                 <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/><br/>
                 <h:outputText value="#{vistaUsuario.user.fechaNacimiento}/"/> <br/>
 
-                <h:form rendered="#{vistaUsuario.loggedAdmin}">
+                <h:form rendered="#{vistaUsuario.loggedAdmin or sesionGlobal.usuario.correo == vistaUsuario.user.correo}">
                     <p:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario}">
                         <p:confirm header="Confirmar" message="Borrar usuario?" icon="ui-icon-alert"/>
                     </p:commandButton>
@@ -29,6 +29,18 @@
                         <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                     </p:confirmDialog>
                 </h:form>
+                
+                <br/>
+                
+                <p:dataList value="#{vistaUsuario.preguntas}" var="pregunta" rendered="#{!(vistaUsuario.preguntas == null)}">
+                    <f:facet name="header">
+                        Preguntas
+                    </f:facet>
+                    <h:link outcome="pregunta">
+                        #{pregunta.titulo}
+                        <f:param name="id" value="#{pregunta.idPregunta}"/>
+                    </h:link>
+                </p:dataList>
             </ui:define>
         </ui:composition>
     </h:body>
