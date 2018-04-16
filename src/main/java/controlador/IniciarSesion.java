@@ -56,10 +56,4 @@ public class IniciarSesion {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index.xhtml?faces-redirect=true";
     }
-    
-    
-    
-    
-   //         <h:outputText rendered="#{principal.loggedUser}" value="#{principal.usuario.nombreUsuario}"/>
-   //         <h:outputText rendered="#{!principal.loggedUser}" value="CREAR USUARIO"/>
 }
