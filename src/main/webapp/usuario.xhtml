@@ -15,10 +15,11 @@
     <h:body>
         <ui:composition template="plantilla.xhtml">
             <ui:define name="contenido">
-                <h1> <h:outputText value="#{vistaUsuario.user.correo}"/><br/></h1>
-                <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/><br/>
-                <h:outputText value="#{vistaUsuario.user.fechaNacimiento}/"/> <br/>
 
+                <h1> <h:outputText value="#{vistaUsuario.user.nombreUsuario}"/></h1>
+                <h:outputText value="#{vistaUsuario.user.correo}"/><br/>
+                <h:outputText value="Fecha de nacimiento: #{vistaUsuario.user.fechaNacimiento}/"/> <br/>
+                <h:outputText value="Activado: #{vistaUsuario.user.activado}"/> <br/>
                 <h:form rendered="#{vistaUsuario.loggedAdmin or sesionGlobal.usuario.correo == vistaUsuario.user.correo}">
                     <p:commandButton value="Borrar Usuario" action="#{vistaUsuario.borrarUsuario}">
                         <p:confirm header="Confirmar" message="Borrar usuario?" icon="ui-icon-alert"/>

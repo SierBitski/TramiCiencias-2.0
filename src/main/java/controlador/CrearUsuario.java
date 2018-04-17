@@ -6,17 +6,15 @@
 package controlador;
 
 import java.util.Date;
-import java.util.Map;
-import javax.annotation.PostConstruct;
+import java.util.regex.*;
+
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import java.util.regex.*;
-import javax.faces.application.FacesMessage;
-import modelo.*;
+
 import lombok.*;
+import modelo.*;
 
 /**
  *
@@ -42,9 +40,11 @@ public class CrearUsuario {
                     .esAdmin(false)
                     .contrasena(contrasena).activado(false).build();
             u.setHash(u.hashCode());
+
             Mailer mailer = new Mailer();
             String linkConfirmacion = "localhost:8084/TramiCiencias/confirmacion.xhtml?id=" + u.getCorreo() + "&hash=" + u.getHash();
             mailer.sendMail("TramiCiencias - Link de confirmación", "tu link de confirmación es: \n" + linkConfirmacion, u.getCorreo());
+
             UsuarioDAO udao = new UsuarioDAO();
             udao.guardar(u);
             return "index.xhtml?faces-redirect=true";

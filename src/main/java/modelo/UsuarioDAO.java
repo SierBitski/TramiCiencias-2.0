@@ -6,7 +6,6 @@
 package modelo;
 
 import java.util.List;
-import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -107,12 +106,34 @@ public class UsuarioDAO {
             tx = s.beginTransaction();
             String hql = "from Usuario";
             result = (List<Usuario>) s.createQuery(hql).list();
+            tx.commit();
         } catch (Exception ex) {
             
         } finally {
             s.close();
         }
         return result;
+    }
+
+    public void confirmarUsuario(String id, int hash) {
+        Session s = sf.openSession();
+        Transaction tx = null;
+        try {
+            tx = s.beginTransaction();
+            Usuario u = (Usuario)s.get(Usuario.class, id);
+            if(u != null && u.getHash() == hash) {
+                u.setActivado(true);
+            }
+            s.saveOrUpdate(u);
+            tx.commit();
+        } catch (Exception e) {
+            if(tx != null) {
+                tx.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            s.close();
+        }
     }
     
 }

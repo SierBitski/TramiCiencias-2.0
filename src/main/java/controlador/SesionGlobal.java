@@ -5,9 +5,7 @@
  */
 package controlador;
 
-import javax.annotation.PostConstruct;
 import javax.faces.bean.*;
-import javax.faces.context.FacesContext;
 import lombok.*;
 import modelo.*;
 
