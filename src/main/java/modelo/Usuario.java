@@ -17,7 +17,9 @@ public class Usuario  implements java.io.Serializable {
      private Date fechaNacimiento;
      private boolean esAdmin;
      private String contrasena;
-
+     @Getter @Setter private boolean activado;
+     @Getter @Setter private int hash;
+     
     public Usuario() {
     }
 
@@ -29,12 +31,14 @@ public class Usuario  implements java.io.Serializable {
         this.contrasena = contrasena;
     }
     @Builder
-    public Usuario(String correo, String nombreUsuario, Date fechaNacimiento, boolean esAdmin, String contrasena) {
+    public Usuario(String correo, String nombreUsuario, Date fechaNacimiento, boolean esAdmin, String contrasena, boolean activado, int hash) {
        this.correo = correo;
        this.nombreUsuario = nombreUsuario;
        this.fechaNacimiento = fechaNacimiento;
        this.esAdmin = esAdmin;
        this.contrasena = contrasena;
+       this.activado = activado;
+       this.hash = hash;
     }
    
     public String getCorreo() {

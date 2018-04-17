@@ -20,5 +20,11 @@
         <property name="contrasena" type="string">
             <column name="contrasena" length="100" not-null="true" />
         </property>
+        <property name="activado" type="boolean">
+            <column name="activado" not-null="true" />            
+        </property>
+        <property name="hash" type="int">
+            <column name="hash" not-null="true"/>            
+        </property>
     </class>
 </hibernate-mapping>

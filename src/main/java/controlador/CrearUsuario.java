@@ -40,7 +40,11 @@ public class CrearUsuario {
                     .nombreUsuario(nombreUsuario)
                     .fechaNacimiento(fechaNacimiento)
                     .esAdmin(false)
-                    .contrasena(contrasena).build();
+                    .contrasena(contrasena).activado(false).build();
+            u.setHash(u.hashCode());
+            Mailer mailer = new Mailer();
+            String linkConfirmacion = "localhost:8084/TramiCiencias/confirmacion.xhtml?id=" + u.getCorreo() + "&hash=" + u.getHash();
+            mailer.sendMail("TramiCiencias - Link de confirmación", "tu link de confirmación es: \n" + linkConfirmacion, u.getCorreo());
             UsuarioDAO udao = new UsuarioDAO();
             udao.guardar(u);
             return "index.xhtml?faces-redirect=true";
