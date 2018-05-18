@@ -8,8 +8,10 @@ package controlador;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import lombok.Getter;
 import modelo.Pregunta;
 import modelo.PreguntaDAO;
@@ -26,9 +28,14 @@ public class Principal {
     @PostConstruct
     public void conseguirPreguntas() {
         PreguntaDAO pdao = new PreguntaDAO();
-        List<Pregunta> preguntas = pdao.preguntas();
-        Collections.reverse(preguntas);
+        List<Pregunta> preguntas = null;
+        try {
+            preguntas = pdao.preguntas();
+            Collections.reverse(preguntas);
         this.preguntas = preguntas;
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
     }
     
 }

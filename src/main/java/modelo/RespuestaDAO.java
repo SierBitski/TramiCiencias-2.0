@@ -22,7 +22,7 @@ public class RespuestaDAO {
         this.sf = HibernateUtil.getSessionFactory();
     }
     
-        public void guardar(Respuesta u){
+        public void guardar(Respuesta u) throws Exception{
         Session s = sf.openSession();
         Transaction tx = null;
         try {
@@ -33,12 +33,13 @@ public class RespuestaDAO {
             if (tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
     }
     
-    public Respuesta buscarPregunta(int id) {
+    public Respuesta buscarPregunta(int id) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         Respuesta result = null;
@@ -51,13 +52,14 @@ public class RespuestaDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
         return result;
     }
     
-    public List<Respuesta> buscarRespuestasPorPregunta(int id) {
+    public List<Respuesta> buscarRespuestasPorPregunta(int id) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         List<Respuesta> result = null;
@@ -67,6 +69,7 @@ public class RespuestaDAO {
             String hql = "from Respuesta where idPregunta = :id";
             result = (List<Respuesta>) s.createQuery(hql).setParameter("id", id).list();
         } catch (Exception ex) {
+            throw new Exception("Error de base de datos");
             
         } finally {
             s.close();
@@ -74,7 +77,7 @@ public class RespuestaDAO {
         return result;
     }
     
-    public void borrar(int id) {
+    public void borrar(int id) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         
@@ -86,12 +89,13 @@ public class RespuestaDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
     }
     
-    public void borrar(Respuesta r) {
+    public void borrar(Respuesta r) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         
@@ -103,12 +107,13 @@ public class RespuestaDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
     }
     
-    public void borrarRespuestasPorPregunta(int id) {
+    public void borrarRespuestasPorPregunta(int id) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         
@@ -121,12 +126,13 @@ public class RespuestaDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
     }
     
-    public void borrarRespuestasPorUsuario(String correo) {
+    public void borrarRespuestasPorUsuario(String correo) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         
@@ -139,6 +145,7 @@ public class RespuestaDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }

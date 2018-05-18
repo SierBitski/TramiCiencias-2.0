@@ -5,9 +5,11 @@
  */
 package controlador;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import lombok.*;
 import modelo.*;
 
@@ -28,7 +30,12 @@ public class NuevaPregunta {
                 .titulo(titulo)
                 .texto(texto)
                 .build();
-        pdao.guardar(r);        
+        try {
+            pdao.guardar(r);            
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
+        
         return "index?faces-redirect=true";
     }
     

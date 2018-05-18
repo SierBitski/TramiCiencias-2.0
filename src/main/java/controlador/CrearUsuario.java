@@ -46,8 +46,15 @@ public class CrearUsuario {
             mailer.sendMail("TramiCiencias - Link de confirmación", "tu link de confirmación es: \n" + linkConfirmacion, u.getCorreo());
 
             UsuarioDAO udao = new UsuarioDAO();
-            udao.guardar(u);
-            return "index.xhtml?faces-redirect=true";
+            try {
+                udao.guardar(u);    
+                return "index.xhtml?faces-redirect=true";
+            } catch(Exception e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+                return "";
+            }
+            
+            
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Correo inválido"));
             return "";

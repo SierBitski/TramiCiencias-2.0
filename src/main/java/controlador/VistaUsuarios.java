@@ -5,7 +5,9 @@
  */
 package controlador;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import modelo.*;
 import lombok.*;
@@ -21,7 +23,11 @@ public class VistaUsuarios {
 
     public void cargarUsuarios() {
         UsuarioDAO udao = new UsuarioDAO();
-        List<Usuario> usuarios = udao.usuarios();
+        try {
+            List<Usuario> usuarios = udao.usuarios();
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
         this.usuarios = usuarios;
     }
 }

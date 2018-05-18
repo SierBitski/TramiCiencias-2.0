@@ -21,7 +21,7 @@ public class UsuarioDAO {
         this.sf = HibernateUtil.getSessionFactory();
     }
     
-    public void guardar(Usuario u){
+    public void guardar(Usuario u) throws Exception{
         Session s = sf.openSession();
         Transaction tx = null;
         try {
@@ -32,12 +32,13 @@ public class UsuarioDAO {
             if (tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
     }
     
-    public Usuario buscar(String id) {
+    public Usuario buscar(String id) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         Usuario result = null;
@@ -50,13 +51,14 @@ public class UsuarioDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
         return result;
     }
     
-    public Usuario buscar(String id, String psswd) {
+    public Usuario buscar(String id, String psswd) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         Usuario result = null;
@@ -64,7 +66,9 @@ public class UsuarioDAO {
         try {
             tx = s.beginTransaction();
             result = (Usuario) s.get(Usuario.class, id);
-            
+            if(result == null) {
+                throw new Exception("Usuario no encontrado.");
+            }
             if(!result.getContrasena().equals(psswd)) {
                 result = null;
             }
@@ -74,13 +78,14 @@ public class UsuarioDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
         return result;
     }
     
-    public void borrar(String id) {
+    public void borrar(String id) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         
@@ -92,12 +97,13 @@ public class UsuarioDAO {
             if(tx != null)
                 tx.rollback();
             ex.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
     }
     
-    public List<Usuario> usuarios() {
+    public List<Usuario> usuarios() throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         List<Usuario> result = null;
@@ -108,14 +114,14 @@ public class UsuarioDAO {
             result = (List<Usuario>) s.createQuery(hql).list();
             tx.commit();
         } catch (Exception ex) {
-            
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }
         return result;
     }
 
-    public void confirmarUsuario(String id, int hash) {
+    public void confirmarUsuario(String id, int hash) throws Exception {
         Session s = sf.openSession();
         Transaction tx = null;
         try {
@@ -131,6 +137,7 @@ public class UsuarioDAO {
                 tx.rollback();
             }
             e.printStackTrace();
+            throw new Exception("Error de base de datos");
         } finally {
             s.close();
         }

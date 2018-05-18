@@ -29,7 +29,7 @@
                 <p:panel>
                     <h:link outcome="index" style="text-decoration: none; text-align: center;"><h1>TramiCiencias</h1></h:link>
                     <div class="ui-g">
-                        
+                          
                         <div class="ui-g-12">
                             <h:form>                            
                                 <p:menubar>
@@ -54,6 +54,10 @@
         </div>
         
         <div class="ui-g" >
+            
+            <p:growl id="messages" showDetail="true">
+                <p:autoUpdate/>
+            </p:growl>
             <div class="ui-g-8 ui-m-12" id="center">
                 <p:panel>
                     <ui:insert name="contenido"> Contenido </ui:insert>

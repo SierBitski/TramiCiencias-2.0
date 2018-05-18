@@ -5,6 +5,7 @@
  */
 package controlador;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -32,7 +33,11 @@ public class NuevaRespuesta {
                 .idPregunta(vistaPregunta.getPregunta().getIdPregunta())
                 .texto(respuesta)
                 .build();
+        try {
         rdao.guardar(r);        
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ocurrió un error con la base de datos; vuelva a intentar más tarde."));
+        }
         ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
         try {
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());    

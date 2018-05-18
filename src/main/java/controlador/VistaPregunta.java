@@ -6,6 +6,7 @@
 package controlador;
 import java.io.IOException;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -42,8 +43,13 @@ public class VistaPregunta {
                 Logger.getLogger(VistaUsuario.class.getName()).log(Level.SEVERE, null, ex);
             }
         }*/
-        this.pregunta = pdao.buscarPregunta(id);
-        this.respuestas = rdao.buscarRespuestasPorPregunta(id);
+        try {
+            this.pregunta = pdao.buscarPregunta(id);
+            this.respuestas = rdao.buscarRespuestasPorPregunta(id);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
+        
         Usuario logged = (Usuario)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("user");
         if(logged != null) {
             this.loggedAdmin = logged.isEsAdmin();
@@ -61,9 +67,12 @@ public class VistaPregunta {
     public void borrarPregunta() {
         RespuestaDAO rdao = new RespuestaDAO();
         PreguntaDAO pdao = new PreguntaDAO();
-        
+        try {
         rdao.borrarRespuestasPorPregunta(this.id);
         pdao.borrar(this.id);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ocurrió un error con la base de datos; vuelva a intentar más tarde."));
+        }
         try {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());    
@@ -74,7 +83,11 @@ public class VistaPregunta {
     
     public void borrarRespuesta(int id) {
         RespuestaDAO rdao = new RespuestaDAO();
-        rdao.borrar(id);
+        try {
+            rdao.borrar(id);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ocurrió un error con la base de datos; vuelva a intentar más tarde."));
+        }
         try {
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());    

@@ -31,20 +31,18 @@ public class IniciarSesion {
         
     public String login() {
         UsuarioDAO udao = new UsuarioDAO();
-        Usuario usuario = udao.buscar(correoUsuario,contrasena);
         FacesContext context = FacesContext.getCurrentInstance();
-
-        if (usuario == null) {
-            context.addMessage(null, new FacesMessage("No se encontró el usuario"));
-            correoUsuario = null;
-            contrasena = null;
-            return "";
-        } else{
-            context.getExternalContext().getSessionMap().put("user", usuario);
+        try {
+            Usuario usuario = udao.buscar(correoUsuario,contrasena);   
             sesionGlobal.login(usuario);
             correoUsuario = null;
             contrasena = null;
             return "index.xhtml?faces-redirect=true";
+        } catch(Exception e) {
+            context.addMessage(null, new FacesMessage(e.getMessage()));
+            correoUsuario = null;
+            contrasena = null;
+            return "";
         }
     }
 

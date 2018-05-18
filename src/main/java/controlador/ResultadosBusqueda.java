@@ -10,8 +10,10 @@ package controlador;
  * @author vicaris
  */
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import modelo.*;
 import lombok.*;
 
@@ -25,13 +27,23 @@ public class ResultadosBusqueda {
        
     public String visitar(int id){
         PreguntaDAO pdao = new PreguntaDAO();
-        preguntaEncontrada = pdao.buscarPregunta(id);
+        try {
+            preguntaEncontrada = pdao.buscarPregunta(id);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
+        
         return "pregunta?id="+preguntaEncontrada;
     }
     
     public String buscarPregunta() {
         PreguntaDAO pdao = new PreguntaDAO();
-        preguntas = pdao.buscarTitulo(busqueda);
+        try {
+            preguntas = pdao.buscarTitulo(busqueda);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
+        
         return "resultados?faces-redirect=true";
     }
     

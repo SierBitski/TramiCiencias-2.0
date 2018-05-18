@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -51,7 +52,12 @@ public class VistaUsuario {
         } else {
             this.loggedAdmin = false;
         }
-        this.user = udao.buscar(id);
+        try {
+            this.user = udao.buscar(id);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
+        
         
         if (this.user == null) {
             try {
@@ -60,7 +66,12 @@ public class VistaUsuario {
 
             }
         } else {
-            this.preguntas = pdao.buscarPorUsuario(user.getCorreo());
+            try {
+                this.preguntas = pdao.buscarPorUsuario(user.getCorreo());
+            } catch(Exception e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+            }
+            
             Collections.reverse(this.preguntas);
         }
     }
@@ -69,20 +80,25 @@ public class VistaUsuario {
         UsuarioDAO udao = new UsuarioDAO();
         RespuestaDAO rdao = new RespuestaDAO();
         PreguntaDAO pdao = new PreguntaDAO();
-        
+        try {
         for(Pregunta p: this.preguntas) {
             rdao.borrarRespuestasPorPregunta(p.getIdPregunta());
             pdao.borrar(p.getIdPregunta());
         }
         rdao.borrarRespuestasPorUsuario(this.id);
-
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Ocurrió un error con la base de datos; vuelva a intentar más tarde."));
+        }
         if(sesionGlobal.getUsuario().getCorreo() == this.id) {
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
             System.out.println("XXXXXXXXXXXXX:" + sesionGlobal.getUsuario().getCorreo());
         }
+        try {
+            udao.borrar(this.id);
+        } catch(Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(e.getMessage()));
+        }
         
-        udao.borrar(this.id);
-
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
         } catch (IOException e) {
